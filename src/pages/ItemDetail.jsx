@@ -3,16 +3,13 @@ import styled from 'styled-components';
 import Katha from '../assets/katha.svg?react';
 import Back from '../assets/back.svg?react';
 import Veg from '../assets/veg-non.svg?react';
-import Drink from '../assets/drink.svg?react';
-import Pizza from '../assets/pizza.svg?react';
-import Sandwich from '../assets/sandwich.svg?react';
 
 import { useMoveBack } from '../hooks/useMoveBack';
 import MenuModal from '../components/MenuModal';
-import { useCategory } from '../hooks/useCategory';
 import Spinner from '../components/Spinner';
 import { useContext } from 'react';
 import { CategoryContext } from '../context/categoryContext';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Nav = styled.nav`
   display: flex;
@@ -50,10 +47,6 @@ const ItemLayout = styled.div`
 `;
 
 const Container = styled.div`
-  overflow-x: scroll;
-  scroll-behavior: smooth;
-  display: inline-grid;
-  grid-template-columns: auto auto;
   border-top: 0.8px solid #b1b1b1;
   border-bottom: 0.8px solid #b1b1b1;
 `;
@@ -82,7 +75,7 @@ const Pairs = styled.div`
 const ItemImage = styled.button`
   border: 0.5px solid #b7b7b7;
   border-radius: 10rem;
-  background-color: white;
+  background-color: ${(props) => props.hex || '#fff'};
   width: 5.5rem;
   height: 5.5rem;
   display: flex;
@@ -113,10 +106,47 @@ const Item = styled.div`
   }
 `;
 
+const VegOption = styled.span`
+  margin-top: 0.5rem;
+
+  & svg {
+    rect {
+      stroke: ${(props) => veg[props.vegOption]};
+    }
+    path {
+      stroke: ${(props) => veg[props.vegOption]};
+      fill: ${(props) => veg[props.vegOption]};
+    }
+  }
+`;
+
+const veg = {
+  veg: '#3D8D45',
+  'non-veg': '#D50A0A',
+  egg: '#FFC700',
+};
+
 function ItemDetail() {
-  const { isLoading, categories, error } = useContext(CategoryContext);
+  const { isLoading, categories } = useContext(CategoryContext);
+  const { state } = useLocation();
+  const navigate = useNavigate();
+  const { item } = state || {};
+
+  const numberFormat = (value) =>
+    new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+    })
+      .format(value)
+      .replace('.00', '');
 
   const moveBack = useMoveBack();
+  const { pairsWith } = item;
+  console.log(pairsWith)
+
+  const handlePair = (sub) => {
+    navigate(`/category/${sub.category}?sub=${sub.title}`);
+  };
 
   if (isLoading) {
     return <Spinner />;
@@ -133,41 +163,42 @@ function ItemDetail() {
       </Nav>
       <div>
         <Header>
-          {`Grapefruit Lavender Cold Brew`} <Veg />
+          {item?.title}{' '}
+          <VegOption vegOption={item?.veg}>
+            <Veg />
+          </VegOption>
         </Header>
       </div>
 
       <DescPrice>
-        <StyledDescription>
-          our hyd take on english breakfast. brioche pav askdfjhskll
-          asfkljhsdkfj lorem...
-        </StyledDescription>
-        <Price>$300</Price>
+        <StyledDescription>{item?.description}</StyledDescription>
+        <Price>{numberFormat(item?.price)}</Price>
       </DescPrice>
 
       <Container>
         <StyledCarousel>
-          <Drink />
-          <Drink />
+          <img src={item?.image} />
         </StyledCarousel>
       </Container>
 
       <Pairing>
         <p> Pairs well with </p>
         <Pairs>
-          <Item>
-            <ItemImage>
-              <Pizza />
-            </ItemImage>
-            <p>Sourdough Pizzas</p>
-          </Item>
-
-          <Item>
-            <ItemImage>
-              <Sandwich />
-            </ItemImage>
-            <p>Between the breads</p>
-          </Item>
+          {pairsWith?.map((sub) => {
+            return (
+              <Item
+                key={sub.id}
+                onClick={() => {
+                  handlePair(sub);
+                }}
+              >
+                <ItemImage hex={sub.hex}>
+                  <img src={sub.image} />
+                </ItemImage>
+                <p>{sub.title}</p>
+              </Item>
+            );
+          })}
         </Pairs>
       </Pairing>
     </ItemLayout>

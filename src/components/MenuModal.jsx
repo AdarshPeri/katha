@@ -23,7 +23,7 @@ const StyledMenu = styled.div`
 
 function MenuModal({ categories }) {
   const modalCategories = categories.filter(
-    (category) => !!category?.categoryEmoji?.emoji
+    (category) => !!category?.categoryEmoji?.emoji && category.title !== 'events'
   );
 
   return (

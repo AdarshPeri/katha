@@ -44,13 +44,13 @@ function Category({ category }) {
     categoryName: { line1, line2 },
     categoryBg,
     categoryEmoji: { emoji, imageUrl },
-    categoryCTA,
+    title,
   } = category;
 
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/category${categoryCTA}`)
+    navigate(`/category/${title}`)
   }
 
   return (

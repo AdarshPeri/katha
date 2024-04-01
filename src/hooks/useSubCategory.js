@@ -1,0 +1,16 @@
+import { useQuery } from '@tanstack/react-query';
+import { getAllSubCategories } from '../services/categoriesAPI';
+
+export const useSubCategory = () => {
+  const {
+    isLoading,
+    data: subCategories,
+    error,
+  } = useQuery({
+    queryKey: ['sub-categories'],
+    queryFn: () => getAllSubCategories(),
+    retry: false,
+  });
+
+  return { isLoading, error, subCategories };
+};

@@ -7,6 +7,9 @@ import ItemDetail from './pages/ItemDetail';
 import { CategoryProvider } from './context/categoryContext';
 import Events from './pages/Events';
 import EventDetails from './pages/EventDetails';
+import AddItem from './pages/AddItem';
+import { Toaster } from 'react-hot-toast';
+import AddSubCategory from './pages/addSubCategory';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,28 +24,44 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <CategoryProvider>
-          <GlobalStyles />
-          <BrowserRouter>
-            <Routes>
-              <Route index element={<Home />} />
-              <Route
-                path='/category/:categoryType'
-                element={<CategoryPage />}
-              />
-              <Route
-                path='/category/:categoryType/:item'
-                element={<ItemDetail />}
-              />
-              <Route
-                path='/events'
-                element={<Events />}
-              />
-              <Route
-                path='/events/:event'
-                element={<EventDetails />}
-              />
-            </Routes>
-          </BrowserRouter>
+            <GlobalStyles />
+            <BrowserRouter>
+              <Routes>
+                <Route index element={<Home />} />
+                <Route
+                  path='/category/:categoryType'
+                  element={<CategoryPage />}
+                />
+                <Route
+                  path='/category/:categoryType/:itemName'
+                  element={<ItemDetail />}
+                />
+                <Route path='/events' element={<Events />} />
+                <Route path='/events/:event' element={<EventDetails />} />
+                <Route path='/addItem' element={<AddItem />} />
+                <Route path='/addSubCategory' element={<AddSubCategory />} />
+              </Routes>
+            </BrowserRouter>
+            <Toaster
+              position='top-right'
+              gutter={12}
+              containerStyle={{ margin: '8px' }}
+              toastOptions={{
+                success: {
+                  duration: 3000,
+                },
+                error: {
+                  duration: 3000,
+                },
+                style: {
+                  fontSize: '16px',
+                  maxWidth: '500px',
+                  padding: '16px 24px',
+                  backgroundColor: 'var(--color-grey-0)',
+                  color: 'var(--color-grey-700)',
+                },
+              }}
+            />
         </CategoryProvider>
       </QueryClientProvider>
     </>

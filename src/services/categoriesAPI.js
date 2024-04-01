@@ -11,15 +11,24 @@ export const getAllCategories = async () => {
   return category;
 };
 
-const getSpecialImage = async (imageUrl) => {};
-
 export const getSubCategories = async (categoryTitle) => {
-  console.log(categoryTitle)
   const { data: subCategories, error } = await supabase
     .from('sub-categories')
     .select('*')
     .eq('isEnabled', true)
-    .eq('parentCategory', categoryTitle);
+    .eq('category', categoryTitle);
+
+  if (error) {
+    throw new Error('Failed to load sub-categories!');
+  }
+  return subCategories;
+};
+
+export const getAllSubCategories = async () => {
+  const { data: subCategories, error } = await supabase
+    .from('sub-categories')
+    .select('*')
+    .eq('isEnabled', true)
 
   if (error) {
     throw new Error('Failed to load sub-categories!');

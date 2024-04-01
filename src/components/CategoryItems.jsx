@@ -1,9 +1,11 @@
+/* eslint-disable react/prop-types */
 import styled from 'styled-components';
 import Veg from '../assets/veg-non.svg?react';
-import Brekkie from '../assets/brekkie.svg?react';
-import Drink from '../assets/drink.svg?react';
-
 import More from '../assets/more.svg?react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useItems } from '../hooks/useItems';
+import { useEffect, useState } from 'react';
+import Spinner from './Spinner';
 
 const StyledItem = styled.div`
   border-top: 0.7px solid #b7b7b7;
@@ -34,7 +36,7 @@ const ItemInfo = styled.div`
   border-right: 0.7px solid #b7b7b7;
   display: grid;
   grid-template-columns: 10fr 1fr;
-  padding: 1rem;
+  padding: 1rem 0.5rem;
 `;
 
 const Title = styled.h3`
@@ -59,7 +61,23 @@ const MoreButton = styled.button`
 
 const VegOption = styled.div`
   margin-top: 0.5rem;
+
+  & svg {
+    rect {
+      stroke: ${(props) => veg[props.vegOption]};
+    }
+    path {
+      stroke: ${(props) => veg[props.vegOption]};
+      fill: ${(props) => veg[props.vegOption]};
+    }
+  }
 `;
+
+const veg = {
+  veg: '#3D8D45',
+  'non-veg': '#D50A0A',
+  egg: '#FFC700',
+};
 
 const ItemImage = styled.div`
   margin-top: 1rem;
@@ -80,134 +98,83 @@ const StyledPrice = styled.h2`
   font-size: 1.4rem;
 `;
 
-function CategoryItems({ category }) {
+const Category = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Heading = styled.h2`
+  font-size: 2.4rem;
+  line-height: 1.2;
+  margin: 1rem 0;
+  font-family: SFProSemiBold;
+`;
+
+function CategoryItems({ categoryTitle }) {
+  const { items, isLoading } = useItems({ categoryTitle });
+  const [searchParams] = useSearchParams();
+  const title = searchParams.get('sub');
+
+  const [itemsToDisplay, setItemsToDisplay] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    let filteredItems = [];
+    if (title === 'Bestsellers') {
+      filteredItems = items?.filter((item) => item?.isBestSeller);
+    } else {
+      filteredItems = items?.filter((item) => item?.subCategory === title);
+    }
+    setItemsToDisplay(filteredItems);
+  }, [title, items]);
+
+  const numberFormat = (value) =>
+    new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+    })
+      .format(value)
+      .replace('.00', '');
+
+  const handleNav = (item) => {
+    navigate(`:${item.title}`, {
+      state: {
+        item: item,
+      },
+    });
+  };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   return (
     <Items>
-      <StyledItem>
-        <ItemInfo>
-          <Title>
-            Hyderabadi <br></br>Breakfast
-          </Title>
-
-          <VegOption>
-            <Veg />
-          </VegOption>
-
-          <StyledDescription>
-            our hyd take on english breakfast. brioche pav askdfjhskll
-            asfkljhsdkfj lorem...
-          </StyledDescription>
-          <StyledFooter>
-            <StyledPrice>$500</StyledPrice>{' '}
-          </StyledFooter>
-            <MoreButton>
-              <More />
-            </MoreButton>
-        </ItemInfo>
-        <ItemImage>
-          <Drink width="100%" height="100%"/>
-        </ItemImage>
-      </StyledItem>
-      <StyledItem>
-        <ItemInfo>
-          <Title>
-            Hyderabadi <br></br>Breakfast
-          </Title>
-
-          <VegOption>
-            <Veg />
-          </VegOption>
-
-          <StyledDescription>
-            our hyd take on english breakfast. brioche pav askdfjhskll
-            asfkljhsdkfj lorem...
-          </StyledDescription>
-          <StyledFooter>
-            <StyledPrice>$500</StyledPrice>{' '}
-          </StyledFooter>
-            <MoreButton>
-              <More />
-            </MoreButton>
-        </ItemInfo>
-        <ItemImage>
-          <Brekkie />
-        </ItemImage>
-      </StyledItem>
-      <StyledItem>
-        <ItemInfo>
-          <Title>
-            Hyderabadi <br></br>Breakfast
-          </Title>
-
-          <VegOption>
-            <Veg />
-          </VegOption>
-
-          <StyledDescription>
-            our hyd take on english breakfast. brioche pav askdfjhskll
-            asfkljhsdkfj lorem...
-          </StyledDescription>
-          <StyledFooter>
-            <StyledPrice>$500</StyledPrice>{' '}
-          </StyledFooter>
-            <MoreButton>
-              <More />
-            </MoreButton>
-        </ItemInfo>
-        <ItemImage>
-          <Brekkie />
-        </ItemImage>
-      </StyledItem>
-      <StyledItem>
-        <ItemInfo>
-          <Title>
-            Hyderabadi <br></br>Breakfast
-          </Title>
-
-          <VegOption>
-            <Veg />
-          </VegOption>
-
-          <StyledDescription>
-            our hyd take on english breakfast. brioche pav askdfjhskll
-            asfkljhsdkfj lorem...
-          </StyledDescription>
-          <StyledFooter>
-            <StyledPrice>$500</StyledPrice>{' '}
-          </StyledFooter>
-            <MoreButton>
-              <More />
-            </MoreButton>
-        </ItemInfo>
-        <ItemImage>
-          <Brekkie />
-        </ItemImage>
-      </StyledItem>
-      <StyledItem>
-        <ItemInfo>
-          <Title>
-            Hyderabadi <br></br>Breakfast
-          </Title>
-
-          <VegOption>
-            <Veg />
-          </VegOption>
-
-          <StyledDescription>
-            our hyd take on english breakfast. brioche pav askdfjhskll
-            asfkljhsdkfj lorem...
-          </StyledDescription>
-          <StyledFooter>
-            <StyledPrice>$500</StyledPrice>{' '}
-          </StyledFooter>
-            <MoreButton>
-              <More />
-            </MoreButton>
-        </ItemInfo>
-        <ItemImage>
-          <Brekkie />
-        </ItemImage>
-      </StyledItem>
+      <Category>
+        <Heading>{title}</Heading>
+        {itemsToDisplay?.map((item) => (
+          <StyledItem key={item.id}>
+            <ItemInfo>
+              <Title>{item.title}</Title>
+              <VegOption vegOption={item.veg}>
+                <Veg />
+              </VegOption>
+              <StyledDescription>
+                {item.description?.slice(0, 115) + '...'}
+              </StyledDescription>
+              <StyledFooter>
+                <StyledPrice>{numberFormat(item.price)}</StyledPrice>{' '}
+              </StyledFooter>
+              <MoreButton onClick={() => handleNav(item)}>
+                <More />
+              </MoreButton>
+            </ItemInfo>
+            <ItemImage>
+              <img src={item.image} width='100%' height='100%' />
+            </ItemImage>
+          </StyledItem>
+        ))}
+      </Category>
     </Items>
   );
 }

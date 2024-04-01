@@ -4,7 +4,6 @@ import Back from '../assets/back.svg?react';
 import styled from 'styled-components';
 import Spinner from '../components/Spinner';
 import { useParams } from 'react-router-dom';
-import { useCategory } from '../hooks/useCategory';
 import CategoryCarousel from '../components/CategoryCarousel';
 import CategoryItems from '../components/CategoryItems';
 import { useMoveBack } from '../hooks/useMoveBack';
@@ -42,19 +41,8 @@ const Header = styled.h1`
   font-family: SFProBold;
 `;
 
-const SearchInput = styled.input`
-  background: url('/src/assets/search.svg') no-repeat left;
-  background-size: 2rem;
-  background-color: #eaeaea;
-  border-radius: 0.3rem;
-  padding: 1rem 3rem;
-  border: unset;
-  border-left: inset 1rem transparent;
-  overflow: hidden;
-`;
-
 function CategoryPage() {
-  const { isLoading, categories, error } = useContext(CategoryContext);
+  const { isLoading, categories } = useContext(CategoryContext);
   const moveBack = useMoveBack();
 
   const { categoryType } = useParams();
@@ -64,13 +52,8 @@ function CategoryPage() {
   }
 
   const category = categories.find((category) =>
-    category.categoryCTA.includes(categoryType)
+    category.title.includes(categoryType)
   );
-
-  const handleSearch = (event) => {
-    const { value } = event.target;
-    if (value.length < 4) return;
-  };
 
   const {
     categoryName: { line1, line2 },
@@ -86,13 +69,8 @@ function CategoryPage() {
         <MenuModal categories={categories}/>
       </Nav>
       <Header>{`${line1} ${line2}`}</Header>
-      <SearchInput
-        type='text'
-        placeholder='Search'
-        onChange={(e) => handleSearch(e)}
-      ></SearchInput>
       <CategoryCarousel category={category}></CategoryCarousel>
-      <CategoryItems category={category} />
+      <CategoryItems categoryTitle={category.title} />
     </StyledCategory>
   );
 }

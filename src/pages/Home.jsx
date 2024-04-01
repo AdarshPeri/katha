@@ -28,8 +28,8 @@ const CategoryGrid = styled.div`
 const H1 = styled.h1`
   font-size: 3.4rem;
   grid-column: 1/-1;
-  /* margin-left: 1rem; */
-  font-family: SFProBold;
+  line-height: 1.2;
+  font-family: SFProSemiBold;
 `;
 
 function Home() {
