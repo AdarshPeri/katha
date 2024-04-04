@@ -56,19 +56,19 @@ const GlobalStyles = createGlobalStyle`
 
   @font-face {
     font-family: 'SFProRegular';
-    src: local('SFProRegular'), url('/src/fonts/sf-pro-rounded-regular.otf');
+    src: local('SFProRegular'), url('/static/fonts/sf-pro-rounded-regular.otf');
     font-weight: 1 1000;
   }
 
   @font-face {
     font-family: 'SFProBold';
-    src: local('SFProBold'), url('/src/fonts/sf-pro-rounded-bold.otf');
+    src: local('SFProBold'), url('/static/fonts/sf-pro-rounded-bold.otf');
     font-weight: 1 1000;
   }
 
   @font-face {
     font-family: 'SFProSemiBold';
-    src: local('SFProSemiBold'), url('/src/fonts/sf-pro-rounded-semibold.otf');
+    src: local('SFProSemiBold'), url('/static/fonts/sf-pro-rounded-semibold.otf');
     font-weight: 1 1000;
   }
 }

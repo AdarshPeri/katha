@@ -22,16 +22,23 @@ const CarouselItem = styled.button`
   border-radius: 10rem;
   background-color: ${(props) =>
     props.active ? '#305F35' : props.bgColor || '#fff'};
-  width: 5.5rem;
-  height: 5.5rem;
+  width: 6rem;
+  height: 6rem;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  img {
+    width: 4rem;
+    height: 4rem;
+  }
 `;
 
 const StyledCarousel = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  gap: 0.7rem;
 `;
 
 const Container = styled.div`
@@ -48,10 +55,9 @@ function CategoryCarousel({ category }) {
   const [active, setActive] = useState(1);
   useEffect(() => {
     const currentSub = searchParams.get('sub');
-    const subCat = subCategories?.find(sub => sub?.title === currentSub)
-    setActive(subCat?.id || 1)
-  }, [searchParams, active, setActive, subCategories])
-
+    const subCat = subCategories?.find((sub) => sub?.title === currentSub);
+    setActive(subCat?.id || 1);
+  }, [searchParams, active, setActive, subCategories]);
 
   if (isLoading) {
     return <Spinner />;
@@ -69,7 +75,7 @@ function CategoryCarousel({ category }) {
 
   const handleClick = (subCategory) => {
     setActive(subCategory.id);
-    searchParams.set('sub', subCategory.title)
+    searchParams.set('sub', subCategory.title);
     setSearchParams(searchParams);
   };
 
