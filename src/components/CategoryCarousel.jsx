@@ -31,7 +31,7 @@ const CarouselItem = styled.button`
 
 const StyledCarousel = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 `;
 
 const Container = styled.div`
@@ -61,7 +61,7 @@ function CategoryCarousel({ category }) {
     {
       id: 1,
       hex: '#fff',
-      image: '/src/assets/star.svg',
+      image: '/static/images/star.svg',
       title: 'Bestsellers',
     },
     ...subCategories,
