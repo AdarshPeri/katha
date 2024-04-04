@@ -42,7 +42,7 @@ const Menu = ({ modalCategories, onCloseModal }) => {
   const navigate = useNavigate();
 
   const handleClick = (categoryCTA) => {
-    navigate(`/category${categoryCTA}`);
+    navigate(`/category/${categoryCTA}`);
     onCloseModal?.();
   };
 
@@ -52,10 +52,10 @@ const Menu = ({ modalCategories, onCloseModal }) => {
         const {
           categoryName: { line1, line2 },
           categoryEmoji: { emoji },
-          categoryCTA,
+          title,
         } = category;
         return (
-          <MenuItem key={emoji} onClick={() => handleClick(categoryCTA)}>
+          <MenuItem key={emoji} onClick={() => handleClick(title)}>
             {`${emoji} ${line1} ${line2}`}
           </MenuItem>
         );
