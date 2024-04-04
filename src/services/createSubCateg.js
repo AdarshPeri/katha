@@ -24,7 +24,7 @@ export const createSubCategory = async (subCategory) => {
 
   // Delete cabin if image failed to upload
   if (storageError) {
-    await supabase.from('items').delete().eq('id', data.id);
+    await supabase.from('sub-categories').delete().eq('id', data.id);
     throw new Error('Failed to upload image, reverted creation!');
   }
 
