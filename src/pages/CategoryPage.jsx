@@ -10,6 +10,7 @@ import { useMoveBack } from '../hooks/useMoveBack';
 import MenuModal from '../components/MenuModal';
 import { useContext } from 'react';
 import { CategoryContext } from '../context/categoryContext';
+import { useMoveHome } from '../hooks/useMoveHome';
 
 const Nav = styled.nav`
   display: flex;
@@ -44,6 +45,8 @@ const Header = styled.h1`
 function CategoryPage() {
   const { isLoading, categories } = useContext(CategoryContext);
   const moveBack = useMoveBack();
+  const moveHome = useMoveHome();
+
 
   const { categoryType } = useParams();
 
@@ -64,7 +67,7 @@ function CategoryPage() {
       <Nav>
         <BackNav>
           <Back onClick={moveBack} />
-          <Katha />
+          <Katha onClick={moveHome}/>
         </BackNav>
         <MenuModal categories={categories}/>
       </Nav>

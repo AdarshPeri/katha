@@ -10,6 +10,7 @@ import MenuModal from '../components/MenuModal';
 import Spinner from '../components/Spinner';
 import { useContext } from 'react';
 import { CategoryContext } from '../context/categoryContext';
+import { useMoveHome } from '../hooks/useMoveHome';
 
 const Nav = styled.nav`
   display: flex;
@@ -87,6 +88,8 @@ function EventDetails() {
   const { isLoading, categories } = useContext(CategoryContext);
 
   const moveBack = useMoveBack();
+  const moveHome = useMoveHome();
+
 
   if (isLoading) {
     return <Spinner />;
@@ -97,7 +100,7 @@ function EventDetails() {
       <Nav>
         <BackNav>
           <Back onClick={moveBack} />
-          <Katha />
+          <Katha onClick={moveHome}/>
         </BackNav>
         <MenuModal categories={categories} />
       </Nav>

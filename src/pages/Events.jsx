@@ -8,6 +8,7 @@ import { CategoryContext } from '../context/categoryContext';
 import { useMoveBack } from '../hooks/useMoveBack';
 import MenuModal from '../components/MenuModal';
 import Spinner from '../components/Spinner';
+import { useMoveHome } from '../hooks/useMoveHome';
 
 const Nav = styled.nav`
   display: flex;
@@ -69,6 +70,8 @@ padding-bottom: 0.5rem;
 function Events() {
   const { isLoading, categories } = useContext(CategoryContext);
   const moveBack = useMoveBack();
+  const moveHome = useMoveHome();
+
 
   if (isLoading) {
     return <Spinner />;
@@ -79,7 +82,7 @@ function Events() {
       <Nav>
         <BackNav>
           <Back onClick={moveBack} />
-          <Katha />
+          <Katha onClick={moveHome}/>
         </BackNav>
         <MenuModal categories={categories} />
       </Nav>

@@ -10,6 +10,7 @@ import Spinner from '../components/Spinner';
 import { useContext } from 'react';
 import { CategoryContext } from '../context/categoryContext';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useMoveHome } from '../hooks/useMoveHome';
 
 const Nav = styled.nav`
   display: flex;
@@ -130,6 +131,8 @@ function ItemDetail() {
   const { isLoading, categories } = useContext(CategoryContext);
   const { state } = useLocation();
   const navigate = useNavigate();
+  const moveHome = useMoveHome();
+
   const { item } = state || {};
 
   const numberFormat = (value) =>
@@ -142,7 +145,6 @@ function ItemDetail() {
 
   const moveBack = useMoveBack();
   const { pairsWith } = item;
-  console.log(pairsWith)
 
   const handlePair = (sub) => {
     navigate(`/category/${sub.category}?sub=${sub.title}`);
@@ -157,7 +159,7 @@ function ItemDetail() {
       <Nav>
         <BackNav>
           <Back onClick={moveBack} />
-          <Katha />
+          <Katha onClick={moveHome}/>
         </BackNav>
         <MenuModal categories={categories} />
       </Nav>
