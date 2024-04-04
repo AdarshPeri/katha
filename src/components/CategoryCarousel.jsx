@@ -55,9 +55,13 @@ function CategoryCarousel({ category }) {
   const [active, setActive] = useState(1);
   useEffect(() => {
     const currentSub = searchParams.get('sub');
+    if (!currentSub) {
+      searchParams.set('sub', 'Bestsellers');
+      setSearchParams(searchParams);
+    }
     const subCat = subCategories?.find((sub) => sub?.title === currentSub);
     setActive(subCat?.id || 1);
-  }, [searchParams, active, setActive, subCategories]);
+  }, [searchParams, active, setActive, subCategories, setSearchParams]);
 
   if (isLoading) {
     return <Spinner />;
