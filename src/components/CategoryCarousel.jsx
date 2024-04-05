@@ -53,7 +53,7 @@ function CategoryCarousel({ category }) {
   const [active, setActive] = useState(1);
   useEffect(() => {
     const currentSub = searchParams.get('sub');
-    if (!currentSub && subCategories.length) {
+    if (!currentSub && subCategories?.length) {
       searchParams.set('sub', 'Bestsellers');
       setSearchParams(searchParams);
     }
