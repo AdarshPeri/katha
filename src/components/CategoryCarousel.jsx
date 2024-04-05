@@ -44,8 +44,6 @@ const StyledCarousel = styled.div`
 const Container = styled.div`
   overflow-x: scroll;
   scroll-behavior: smooth;
-  /* display: inline-grid;
-  grid-template-columns: auto auto; */
 `;
 
 function CategoryCarousel({ category }) {
@@ -55,7 +53,7 @@ function CategoryCarousel({ category }) {
   const [active, setActive] = useState(1);
   useEffect(() => {
     const currentSub = searchParams.get('sub');
-    if (!currentSub) {
+    if (!currentSub && subCategories.length) {
       searchParams.set('sub', 'Bestsellers');
       setSearchParams(searchParams);
     }
@@ -67,7 +65,7 @@ function CategoryCarousel({ category }) {
     return <Spinner />;
   }
 
-  subCategories = [
+  subCategories = subCategories?.length ? [
     {
       id: 1,
       hex: '#fff',
@@ -75,7 +73,7 @@ function CategoryCarousel({ category }) {
       title: 'Bestsellers',
     },
     ...subCategories,
-  ];
+  ] : [];
 
   const handleClick = (subCategory) => {
     setActive(subCategory.id);
@@ -85,20 +83,22 @@ function CategoryCarousel({ category }) {
 
   return (
     <Container>
-      <StyledCarousel>
-        {subCategories.map((subCategory) => (
-          <CarouselItems key={subCategory.id}>
-            <CarouselItem
-              bgColor={subCategory.hex}
-              onClick={() => handleClick(subCategory)}
-              active={active === subCategory.id}
-            >
-              <img src={subCategory.image} alt='subCategory' />
-            </CarouselItem>
-            <p>{subCategory.title}</p>
-          </CarouselItems>
-        ))}
-      </StyledCarousel>
+      {subCategories?.length > 1 && (
+        <StyledCarousel>
+          {subCategories.map((subCategory) => (
+            <CarouselItems key={subCategory.id}>
+              <CarouselItem
+                bgColor={subCategory.hex}
+                onClick={() => handleClick(subCategory)}
+                active={active === subCategory.id}
+              >
+                <img src={subCategory.image} alt='subCategory' />
+              </CarouselItem>
+              <p>{subCategory.title}</p>
+            </CarouselItems>
+          ))}
+        </StyledCarousel>
+      )}
     </Container>
   );
 }
