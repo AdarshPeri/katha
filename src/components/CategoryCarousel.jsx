@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useSubCategories } from '../hooks/useSubCategories';
 import Spinner from './Spinner';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 const CarouselItems = styled.div`
   display: flex;
@@ -28,9 +28,13 @@ const CarouselItem = styled.button`
   align-items: center;
   justify-content: center;
 
-  img {
+  & img {
     width: 4rem;
     height: 4rem;
+  }
+
+  & p {
+    font-size: 4rem;
   }
 `;
 
@@ -46,11 +50,31 @@ const Container = styled.div`
   scroll-behavior: smooth;
 `;
 
+const extraSubs = [
+  {
+    id: 2,
+    hex: '#ffe6ca',
+    emoji: '☀️',
+    title: 'Project Garmi',
+    to: '/category/specials'
+  },
+  {
+    id: 3,
+    hex: '#ffe6ca',
+    emoji: '🥐',
+    title: 'Bakes Menu',
+    to: '/category/bakes'
+  },
+];
+
 function CategoryCarousel({ category }) {
   const { title } = category;
   let { isLoading, subCategories } = useSubCategories({ categoryTitle: title });
   const [searchParams, setSearchParams] = useSearchParams();
   const [active, setActive] = useState(1);
+  const navigate = useNavigate();
+  const { categoryType } = useParams();
+
   useEffect(() => {
     const currentSub = searchParams.get('sub');
     if (!currentSub && subCategories?.length) {
@@ -65,17 +89,27 @@ function CategoryCarousel({ category }) {
     return <Spinner />;
   }
 
-  subCategories = subCategories?.length ? [
-    {
-      id: 1,
-      hex: '#fff',
-      image: '/static/images/star.svg',
-      title: 'Bestsellers',
-    },
-    ...subCategories,
-  ] : [];
+  subCategories = subCategories?.length
+    ? [
+        {
+          id: 1,
+          hex: '#fff',
+          image: '/static/images/star.svg',
+          title: 'Bestsellers',
+        },
+        ...subCategories,
+      ]
+    : [];
+
+  if(subCategories?.length && categoryType !== 'bakes') {
+    subCategories.push(...extraSubs)
+  }
 
   const handleClick = (subCategory) => {
+    if(subCategory?.emoji && subCategory?.to) {
+      navigate(subCategory.to);
+      return;
+    }
     setActive(subCategory.id);
     searchParams.set('sub', subCategory.title);
     setSearchParams(searchParams);
@@ -92,7 +126,11 @@ function CategoryCarousel({ category }) {
                 onClick={() => handleClick(subCategory)}
                 active={active === subCategory.id}
               >
-                <img src={subCategory.image} alt='subCategory' />
+               {
+                subCategory.image ? (<img src={subCategory.image} alt='subCategory' />) : (
+                  <p>{subCategory.emoji}</p>
+                )
+               } 
               </CarouselItem>
               <p>{subCategory.title}</p>
             </CarouselItems>

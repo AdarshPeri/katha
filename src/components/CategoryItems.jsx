@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 import Veg from '../assets/veg-non.svg?react';
 import More from '../assets/more.svg?react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useItems } from '../hooks/useItems';
 import { useEffect, useState } from 'react';
 import Spinner from './Spinner';
@@ -90,9 +90,6 @@ const ItemImage = styled.div`
 
 const Items = styled.div`
   display: block;
-  overflow-x: hidden;
-  overflow-y: auto;
-  height: 60rem;
   margin-bottom: 2rem;
 `;
 
