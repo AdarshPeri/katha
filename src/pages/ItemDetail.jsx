@@ -77,11 +77,16 @@ const ItemImage = styled.button`
   border: 0.5px solid #b7b7b7;
   border-radius: 10rem;
   background-color: ${(props) => props.hex || '#fff'};
-  width: 5.5rem;
-  height: 5.5rem;
+  width: 6rem;
+  height: 6rem;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  & img {
+    height: 4rem;
+    width: 4rem;
+  }
 `;
 
 const DescPrice = styled.div`
@@ -101,7 +106,7 @@ const Item = styled.div`
 
   & p {
     font-size: 1rem;
-    max-width: 5.5rem;
+    max-width: 6rem;
     text-align: center;
     font-family: SFProRegular;
   }
