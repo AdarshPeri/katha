@@ -87,6 +87,7 @@ function AddEvent() {
           {...register('previewDate', {
             required: 'This field is required',
           })}
+          placeholder='30/03'
         />
       </FormRow>
 
@@ -98,6 +99,7 @@ function AddEvent() {
           {...register('fullDate', {
             required: 'This field is required',
           })}
+          placeholder='Friday, March 15th - 12PM to 6PM'
         />
       </FormRow>
 
