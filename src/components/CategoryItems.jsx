@@ -160,7 +160,7 @@ function CategoryItems({ categoryTitle }) {
                 <Veg />
               </VegOption>
               <StyledDescription>
-                {item.description?.slice(0, 115) + '...'}
+                {item.description?.slice(0, 110) + '...'}
               </StyledDescription>
               <StyledFooter>
                 <StyledPrice>{numberFormat(item.price)}</StyledPrice>{' '}
