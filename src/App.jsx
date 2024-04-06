@@ -15,7 +15,7 @@ import AddEvent from './pages/AddEvent';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 60 * 10 * 1000,
+      staleTime: 60 * 30 * 1000,
     },
   },
 });
