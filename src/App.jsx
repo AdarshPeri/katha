@@ -10,6 +10,7 @@ import EventDetails from './pages/EventDetails';
 import AddItem from './pages/AddItem';
 import { Toaster } from 'react-hot-toast';
 import AddSubCategory from './pages/addSubCategory';
+import AddEvent from './pages/AddEvent';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,9 +37,10 @@ function App() {
                   path='/category/:categoryType/:itemName'
                   element={<ItemDetail />}
                 />
-                <Route path='/events' element={<Events />} />
-                <Route path='/events/:event' element={<EventDetails />} />
+                <Route path='/category/events' element={<Events />} />
+                <Route path='/category/events/:event' element={<EventDetails />} />
                 <Route path='/addItem' element={<AddItem />} />
+                <Route path='/addEvent' element={<AddEvent />} />
                 <Route path='/addSubCategory' element={<AddSubCategory />} />
               </Routes>
             </BrowserRouter>

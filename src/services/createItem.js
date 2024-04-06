@@ -41,7 +41,7 @@ export const createItem = async (newItem) => {
     .from('items')
     .upload(imageName, newItem.image);
 
-  // Delete cabin if image failed to upload
+  // Delete item if image failed to upload
   if (storageError) {
     await supabase.from('items').delete().eq('id', data.id);
     throw new Error('Failed to upload item image, reverted item creation!');

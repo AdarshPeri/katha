@@ -2,8 +2,6 @@
 import styled from 'styled-components';
 import Katha from '../assets/katha.svg?react';
 import Back from '../assets/back.svg?react';
-import Drink from '../assets/drink.svg?react';
-
 
 import { useMoveBack } from '../hooks/useMoveBack';
 import MenuModal from '../components/MenuModal';
@@ -11,6 +9,7 @@ import Spinner from '../components/Spinner';
 import { useContext } from 'react';
 import { CategoryContext } from '../context/categoryContext';
 import { useMoveHome } from '../hooks/useMoveHome';
+import { useLocation } from 'react-router-dom';
 
 const Nav = styled.nav`
   display: flex;
@@ -50,8 +49,6 @@ const ItemLayout = styled.div`
 const Container = styled.div`
   overflow-x: scroll;
   scroll-behavior: smooth;
-  display: inline-grid;
-  grid-template-columns: auto auto;
   border-top: 0.8px solid #b1b1b1;
   border-bottom: 0.8px solid #b1b1b1;
 `;
@@ -60,6 +57,11 @@ const StyledCarousel = styled.div`
   display: flex;
   gap: 0.9rem;
   padding: 1.4rem 0;
+  justify-content: center;
+
+  & img {
+    border-radius: var(--border-radius-sm);
+  }
 `;
 
 const DescPrice = styled.div`
@@ -68,28 +70,30 @@ const DescPrice = styled.div`
 `;
 
 const DateDesc = styled.h2`
-font-size: 2rem;
+  font-size: 2rem;
 `;
 
 const Button = styled.button`
-background-color: #d9d9d9;
-display: flex;
-justify-content: center;
-align-items: center;
-color: black;
-border: unset;
-height: 4.5rem;
-border-radius: var(--border-radius-sm);
-font-size: 2.4rem;
-font-family: SFProSemiBold;
+  background-color: #d9d9d9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  border: unset;
+  height: 4.5rem;
+  border-radius: var(--border-radius-sm);
+  font-size: 2.4rem;
+  font-family: SFProSemiBold;
 `;
 
 function EventDetails() {
   const { isLoading, categories } = useContext(CategoryContext);
+  const { state } = useLocation();
 
   const moveBack = useMoveBack();
   const moveHome = useMoveHome();
 
+  const { event } = state || {};
 
   if (isLoading) {
     return <Spinner />;
@@ -100,30 +104,28 @@ function EventDetails() {
       <Nav>
         <BackNav>
           <Back onClick={moveBack} />
-          <Katha onClick={moveHome}/>
+          <Katha onClick={moveHome} />
         </BackNav>
         <MenuModal categories={categories} />
       </Nav>
 
-      <Header>{`Listening Session - Arctic Monkeys' AM`}</Header>
+      <Header>{event?.title}</Header>
 
-      <DateDesc>Saturday, March 30th</DateDesc>
+      <DateDesc>{event?.fullDate}</DateDesc>
 
       <Container>
         <StyledCarousel>
-          <Drink />
-          <Drink />
+          <img src={event?.fullImage} />
         </StyledCarousel>
       </Container>
 
       <DescPrice>
-        <StyledDescription>
-          our hyd take on english breakfast. brioche pav askdfjhskll
-          asfkljhsdkfj lorem...
-        </StyledDescription>
+        <StyledDescription>{event?.description}</StyledDescription>
       </DescPrice>
 
-      <Button><a>RSVP</a></Button>
+      <Button>
+        <a href={event?.rsvp}>RSVP</a>
+      </Button>
     </ItemLayout>
   );
 }

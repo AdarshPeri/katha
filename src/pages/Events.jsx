@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import Katha from '../assets/katha.svg?react';
 import Back from '../assets/back.svg?react';
-import Rectangle from '../assets/Rectangle.svg?react';
 
 import { useContext } from 'react';
 import { CategoryContext } from '../context/categoryContext';
@@ -9,6 +8,8 @@ import { useMoveBack } from '../hooks/useMoveBack';
 import MenuModal from '../components/MenuModal';
 import Spinner from '../components/Spinner';
 import { useMoveHome } from '../hooks/useMoveHome';
+import { useEvents } from '../hooks/useEvents';
+import { useNavigate } from 'react-router-dom';
 
 const Nav = styled.nav`
   display: flex;
@@ -43,7 +44,7 @@ const Header = styled.h1`
 const EventCard = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem
+  gap: 1rem;
 `;
 
 const Title = styled.h2`
@@ -53,10 +54,10 @@ const Title = styled.h2`
 `;
 
 const Summary = styled.div`
-display: flex;
-border-bottom: 0.5px solid #b1b1b1; 
-gap: 0.5rem;
-`
+  display: flex;
+  border-bottom: 0.5px solid #b1b1b1;
+  gap: 0.5rem;
+`;
 
 const Desc = styled.p`
   font-size: 1.2rem;
@@ -65,38 +66,49 @@ const Desc = styled.p`
 `;
 
 const StyledDate = styled(Title)`
-padding-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
 `;
 function Events() {
   const { isLoading, categories } = useContext(CategoryContext);
+  const { isLoading: isEventsLoading, events } = useEvents();
   const moveBack = useMoveBack();
   const moveHome = useMoveHome();
+  const navigate = useNavigate();
 
-
-  if (isLoading) {
+  if (isLoading || isEventsLoading) {
     return <Spinner />;
   }
+
+  const handleNav = (event) => {
+    navigate(`:${event.title}`, {
+      state: {
+        event: event,
+      },
+    });
+  };
 
   return (
     <StyledEvent>
       <Nav>
         <BackNav>
           <Back onClick={moveBack} />
-          <Katha onClick={moveHome}/>
+          <Katha onClick={moveHome} />
         </BackNav>
         <MenuModal categories={categories} />
       </Nav>
 
       <Header>Events @Katha</Header>
 
-      <EventCard>
-        <Rectangle/>
-        <Title>Listening Session - Arctic Monkeys' AM</Title>
-        <Summary>
-          <Desc>Returning for it's sixth edition, designed and curated by artists, for artists, this avenue offers...</Desc>
-          <StyledDate>30/03</StyledDate>
-        </Summary>
-      </EventCard>
+      {events?.map((event) => (
+        <EventCard key={event.id} onClick={() => handleNav(event)}>
+          <img src={event.previewImage} />
+          <Title>{event.title}</Title>
+          <Summary>
+            <Desc>{event.description}</Desc>
+            <StyledDate>{event.previewDate}</StyledDate>
+          </Summary>
+        </EventCard>
+      ))}
     </StyledEvent>
   );
 }

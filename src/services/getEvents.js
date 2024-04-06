@@ -1,14 +1,13 @@
 import supabase from './supabase';
 
-export const getItems = async ({ categoryTitle }) => {
+export const getEvents = async () => {
   const { data: items, error } = await supabase
-    .from('items')
+    .from('events')
     .select('*')
     .eq('isEnabled', true)
-    .eq('category', categoryTitle);
 
   if (error) {
-    throw new Error('Failed to load items!');
+    throw new Error('Failed to load events!');
   }
   return items;
 };
