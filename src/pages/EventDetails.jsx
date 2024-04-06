@@ -74,16 +74,20 @@ const DateDesc = styled.h2`
 `;
 
 const Button = styled.button`
-  background-color: #d9d9d9;
+  background-color: #305F35;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: black;
+  color: white;
   border: unset;
   height: 4.5rem;
   border-radius: var(--border-radius-sm);
   font-size: 2.4rem;
   font-family: SFProSemiBold;
+
+  & a {
+    width: 100%
+  }
 `;
 
 function EventDetails() {
@@ -122,6 +126,7 @@ function EventDetails() {
       <DescPrice>
         <StyledDescription>{event?.description}</StyledDescription>
       </DescPrice>
+
 
       <Button>
         <a href={event?.rsvp} target='_blank'>RSVP</a>
