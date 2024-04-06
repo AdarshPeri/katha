@@ -45,6 +45,10 @@ const EventCard = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
+
+  & img {
+    border-radius: var(--border-radius-sm);
+  }
 `;
 
 const Title = styled.h2`
