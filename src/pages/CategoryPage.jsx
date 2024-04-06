@@ -1,12 +1,10 @@
 import Katha from '../assets/katha.svg?react';
-import Back from '../assets/back.svg?react';
 
 import styled from 'styled-components';
 import Spinner from '../components/Spinner';
 import { useParams } from 'react-router-dom';
 import CategoryCarousel from '../components/CategoryCarousel';
 import CategoryItems from '../components/CategoryItems';
-import { useMoveBack } from '../hooks/useMoveBack';
 import MenuModal from '../components/MenuModal';
 import { useContext } from 'react';
 import { CategoryContext } from '../context/categoryContext';
@@ -23,7 +21,6 @@ const BackNav = styled.div`
   display: flex;
   gap: 1.2rem;
   align-items: center;
-  margin-left: -1rem;
 `;
 
 const StyledCategory = styled.div`
@@ -44,7 +41,6 @@ const Header = styled.h1`
 
 function CategoryPage() {
   const { isLoading, categories } = useContext(CategoryContext);
-  const moveBack = useMoveBack();
   const moveHome = useMoveHome();
 
 
@@ -66,7 +62,6 @@ function CategoryPage() {
     <StyledCategory>
       <Nav>
         <BackNav>
-          <Back onClick={moveBack} />
           <Katha onClick={moveHome}/>
         </BackNav>
         <MenuModal categories={categories}/>
