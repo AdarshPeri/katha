@@ -124,7 +124,7 @@ function EventDetails() {
       </DescPrice>
 
       <Button>
-        <a href={event?.rsvp}>RSVP</a>
+        <a href={event?.rsvp} target='_blank'>RSVP</a>
       </Button>
     </ItemLayout>
   );
