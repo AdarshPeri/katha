@@ -9,7 +9,7 @@ export const useCategory = () => {
   } = useQuery({
     queryKey: ['categories'],
     queryFn: () => getAllCategories(),
-    retry: false,
+    retry: 3
   });
 
   return { isLoading, error, categories };

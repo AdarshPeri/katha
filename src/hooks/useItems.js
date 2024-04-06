@@ -9,7 +9,7 @@ export const useItems = ({ categoryTitle }) => {
   } = useQuery({
     queryKey: [`${categoryTitle}`, 'items', categoryTitle],
     queryFn: () => getItems({categoryTitle}),
-    retry: false,
+    retry: 3,
   });
 
   return { isLoading, error, items };

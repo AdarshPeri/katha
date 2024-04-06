@@ -9,7 +9,7 @@ export const useSubCategory = () => {
   } = useQuery({
     queryKey: ['sub-categories'],
     queryFn: () => getAllSubCategories(),
-    retry: false,
+    retry: 3,
   });
 
   return { isLoading, error, subCategories };

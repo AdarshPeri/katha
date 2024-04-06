@@ -9,7 +9,7 @@ export const useEvents = () => {
   } = useQuery({
     queryKey: ['events'],
     queryFn: () => getEvents(),
-    retry: false,
+    retry: 3,
   });
 
   return { isLoading, error, events };

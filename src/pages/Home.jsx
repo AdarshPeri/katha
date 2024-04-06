@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import Category from '../components/Category';
 import Katha from '../assets/katha.svg?react';
-import { useCategory } from '../hooks/useCategory';
 import Spinner from '../components/Spinner';
 import MenuModal from '../components/MenuModal';
 import { useContext } from 'react';
@@ -33,8 +32,7 @@ const H1 = styled.h1`
 `;
 
 function Home() {
-  const { isLoading, categories, error } = useContext(CategoryContext);
-
+  const { isLoading, categories } = useContext(CategoryContext);
 
   if (isLoading) {
     return <Spinner />;

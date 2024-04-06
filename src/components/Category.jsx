@@ -19,7 +19,6 @@ const CategoryCard = styled.div`
 
 const SpecialCategoryCard = styled(CategoryCard)`
   & img {
-    /* display: block; */
     object-fit: cover;
     height: 100%;
     width: 100%;

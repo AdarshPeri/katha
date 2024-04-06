@@ -1,5 +1,4 @@
 import Katha from '../assets/katha.svg?react';
-
 import styled from 'styled-components';
 import Spinner from '../components/Spinner';
 import { useParams } from 'react-router-dom';
@@ -42,7 +41,6 @@ const Header = styled.h1`
 function CategoryPage() {
   const { isLoading, categories } = useContext(CategoryContext);
   const moveHome = useMoveHome();
-
 
   const { categoryType } = useParams();
 

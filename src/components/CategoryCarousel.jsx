@@ -56,14 +56,14 @@ const extraSubs = [
     hex: '#ffe6ca',
     emoji: '☀️',
     title: 'Project Garmi',
-    to: '/category/specials'
+    to: '/category/specials',
   },
   {
     id: 3,
     hex: '#ffe6ca',
     emoji: '🥐',
     title: 'Bakes Menu',
-    to: '/category/bakes'
+    to: '/category/bakes',
   },
 ];
 
@@ -101,12 +101,12 @@ function CategoryCarousel({ category }) {
       ]
     : [];
 
-  if(subCategories?.length && categoryType !== 'bakes') {
-    subCategories.push(...extraSubs)
+  if (subCategories?.length && categoryType !== 'bakes') {
+    subCategories.push(...extraSubs);
   }
 
   const handleClick = (subCategory) => {
-    if(subCategory?.emoji && subCategory?.to) {
+    if (subCategory?.emoji && subCategory?.to) {
       navigate(subCategory.to);
       return;
     }
@@ -126,11 +126,11 @@ function CategoryCarousel({ category }) {
                 onClick={() => handleClick(subCategory)}
                 active={active === subCategory.id}
               >
-               {
-                subCategory.image ? (<img src={subCategory.image} alt='subCategory' />) : (
+                {subCategory.image ? (
+                  <img src={subCategory.image} alt='subCategory' />
+                ) : (
                   <p>{subCategory.emoji}</p>
-                )
-               } 
+                )}
               </CarouselItem>
               <p>{subCategory.title}</p>
             </CarouselItems>
