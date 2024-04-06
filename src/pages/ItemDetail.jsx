@@ -56,6 +56,7 @@ const StyledCarousel = styled.div`
   display: flex;
   gap: 0.9rem;
   padding: 1.4rem 0;
+  justify-content: center;
 
   & img {
     border-radius: var(--border-radius-sm);
