@@ -56,6 +56,10 @@ const StyledCarousel = styled.div`
   display: flex;
   gap: 0.9rem;
   padding: 1.4rem 0;
+
+  & img {
+    border-radius: var(--border-radius-sm);
+  }
 `;
 
 const Pairing = styled.div`
@@ -97,6 +101,7 @@ const DescPrice = styled.div`
 const Price = styled.p`
   align-self: flex-end;
   font-size: 1.4rem;
+  font-family: SFProBold;
 `;
 
 const Item = styled.div`
@@ -164,7 +169,7 @@ function ItemDetail() {
       <Nav>
         <BackNav>
           <Back onClick={moveBack} />
-          <Katha onClick={moveHome}/>
+          <Katha onClick={moveHome} />
         </BackNav>
         <MenuModal categories={categories} />
       </Nav>

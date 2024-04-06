@@ -83,6 +83,9 @@ const ItemImage = styled.div`
   margin-top: 1rem;
   height: 10rem;
   width: 10.2rem;
+  & img {
+    border-radius: var(--border-radius-sm);
+  }
 `;
 
 const Items = styled.div`
@@ -94,7 +97,7 @@ const Items = styled.div`
 `;
 
 const StyledPrice = styled.h2`
-  font-family: SFProSemiBold;
+  font-family: SFProBold;
   font-size: 1.4rem;
 `;
 
@@ -153,7 +156,7 @@ function CategoryItems({ categoryTitle }) {
       <Category>
         <Heading>{title}</Heading>
         {itemsToDisplay?.map((item) => (
-          <StyledItem key={item.id}>
+          <StyledItem key={item.id} onClick={() => handleNav(item)}>
             <ItemInfo>
               <Title>{item.title}</Title>
               <VegOption vegOption={item.veg}>
