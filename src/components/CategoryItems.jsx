@@ -162,7 +162,7 @@ function CategoryItems({ categoryTitle }) {
                   <Veg />
                 </VegOption>
               ) : (
-                <Vegan />
+                <Vegan width="1.9rem" height="1.9rem"/>
               )}
 
               <StyledDescription>
