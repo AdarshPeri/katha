@@ -79,6 +79,7 @@ function AddItem() {
           <option value='veg'>veg</option>
           <option value='non-veg'>non-veg</option>
           <option value='egg'>egg</option>
+          <option value='vegan'>vegan</option>
         </select>
       </FormRow>
 

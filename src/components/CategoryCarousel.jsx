@@ -105,6 +105,8 @@ function CategoryCarousel({ category }) {
     subCategories.push(...extraSubs);
   }
 
+  subCategories.sort((a,b) => a.order - b.order)
+
   const handleClick = (subCategory) => {
     if (subCategory?.emoji && subCategory?.to) {
       navigate(subCategory.to);

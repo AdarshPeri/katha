@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Katha from '../assets/katha.svg?react';
 import Back from '../assets/back.svg?react';
 import Veg from '../assets/veg-non.svg?react';
+import Vegan from '../assets/vegan.svg?react';
 
 import { useMoveBack } from '../hooks/useMoveBack';
 import MenuModal from '../components/MenuModal';
@@ -177,9 +178,13 @@ function ItemDetail() {
       <div>
         <Header>
           {item?.title}{' '}
-          <VegOption vegOption={item?.veg}>
-            <Veg />
-          </VegOption>
+          {item.veg !== 'vegan' ? (
+            <VegOption vegOption={item?.veg}>
+              <Veg />
+            </VegOption>
+          ) : (
+            <Vegan width="1.9rem" height="1.9rem"/>
+          )}
         </Header>
       </div>
 

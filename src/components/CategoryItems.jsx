@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import styled from 'styled-components';
 import Veg from '../assets/veg-non.svg?react';
+import Vegan from '../assets/vegan.svg?react';
 import More from '../assets/more.svg?react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useItems } from '../hooks/useItems';
@@ -156,9 +157,14 @@ function CategoryItems({ categoryTitle }) {
           <StyledItem key={item.id} onClick={() => handleNav(item)}>
             <ItemInfo>
               <Title>{item.title}</Title>
-              <VegOption vegOption={item.veg}>
-                <Veg />
-              </VegOption>
+              {item.veg !== 'vegan' ? (
+                <VegOption vegOption={item.veg}>
+                  <Veg />
+                </VegOption>
+              ) : (
+                <Vegan />
+              )}
+
               <StyledDescription>
                 {item.description?.slice(0, 110) + '...'}
               </StyledDescription>
