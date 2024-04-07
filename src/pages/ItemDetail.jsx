@@ -179,7 +179,7 @@ function ItemDetail() {
   const { pairsWith } = item;
 
   const handlePair = (sub) => {
-    navigate(`/category/${sub.category}?sub=${sub.title}`);
+    navigate(`/category/${sub.category}?sub=${sub.title?.replace('&', '%26')}`);
   };
 
   if (isLoading) {
