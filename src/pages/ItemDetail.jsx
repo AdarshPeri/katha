@@ -139,6 +139,26 @@ const veg = {
   egg: '#FFC700',
 };
 
+const AddOn = styled.span`
+font-family:SFProSemibold;
+font-size: 1.6rem;
+`
+const AddOnLine = styled.span`
+font-size: 1.4rem;
+`
+
+/*
+Add Ons 1: 
+chicken: $100
+prawns: $150
+*/
+
+/*
+tofu: $
+chicken: $100
+prawns: $150
+*/
+
 function ItemDetail() {
   const { isLoading, categories } = useContext(CategoryContext);
   const { state } = useLocation();
@@ -183,7 +203,7 @@ function ItemDetail() {
               <Veg />
             </VegOption>
           ) : (
-            <Vegan width="1.9rem" height="1.9rem"/>
+            <Vegan width='1.9rem' height='1.9rem' />
           )}
         </Header>
       </div>
@@ -192,6 +212,13 @@ function ItemDetail() {
         <StyledDescription>{item?.description}</StyledDescription>
         <Price>{numberFormat(item?.price)}</Price>
       </DescPrice>
+
+      {item?.addOns && (
+        <p>
+          <AddOn>Add ons:</AddOn> <br></br>
+          <AddOnLine>{item.addOns}</AddOnLine>
+        </p>
+      )}
 
       <Container>
         <StyledCarousel>

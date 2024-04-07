@@ -158,6 +158,17 @@ function AddItem() {
         </select>
       </FormRow>
 
+      <FormRow label='Add Ons' error={errors?.addOns?.message}>
+        <Input
+          type='text'
+          id='addOns'
+          disabled={isDisabled}
+          {...register('addOns', {
+            required: 'This field is required',
+          })}
+        />
+      </FormRow>
+
       <FormRow>
         <Button variation='secondary' type='reset'>
           Cancel
