@@ -163,9 +163,7 @@ function AddItem() {
           type='text'
           id='addOns'
           disabled={isDisabled}
-          {...register('addOns', {
-            required: 'This field is required',
-          })}
+          {...register('addOns')}
         />
       </FormRow>
 
