@@ -149,6 +149,8 @@ function CategoryItems({ categoryTitle }) {
     return <Spinner />;
   }
 
+  itemsToDisplay?.sort((a,b) => a.order - b.order);
+  
   return (
     <Items>
       <Category>
