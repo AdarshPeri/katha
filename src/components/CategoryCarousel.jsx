@@ -31,6 +31,7 @@ const CarouselItem = styled.button`
   & img {
     width: 4rem;
     height: 4rem;
+    pointer-events: none;
   }
 
   & p {

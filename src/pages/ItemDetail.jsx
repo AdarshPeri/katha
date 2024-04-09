@@ -61,6 +61,7 @@ const StyledCarousel = styled.div`
 
   & img {
     border-radius: var(--border-radius-sm);
+    pointer-events: none;
   }
 `;
 

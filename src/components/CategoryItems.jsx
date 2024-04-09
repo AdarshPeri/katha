@@ -2,7 +2,6 @@
 import styled from 'styled-components';
 import Veg from '../assets/veg-non.svg?react';
 import Vegan from '../assets/vegan.svg?react';
-import More from '../assets/more.svg?react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useItems } from '../hooks/useItems';
 import { useEffect, useState } from 'react';
@@ -11,7 +10,7 @@ import Spinner from './Spinner';
 const StyledItem = styled.div`
   border-top: 0.7px solid #b7b7b7;
   border-bottom: 0.7px solid #b7b7b7;
-  height: 15.5rem;
+  height: 14rem;
   display: grid;
   grid-template-columns: 2.5fr 1fr;
   gap: 1rem;
@@ -37,7 +36,7 @@ const ItemInfo = styled.div`
   border-right: 0.7px solid #b7b7b7;
   display: grid;
   grid-template-columns: 10fr 1fr;
-  padding: 1rem 0.5rem;
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
 `;
 
 const Title = styled.h3`
@@ -45,19 +44,6 @@ const Title = styled.h3`
   font-size: 2rem;
   font-family: SFProSemiBold;
   line-height: 1.2;
-`;
-
-const MoreButton = styled.button`
-  border: 0.5px solid black;
-  border-radius: 10rem;
-  background-color: white;
-  width: 1.8rem;
-  height: 1.8rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 1rem;
-  align-self: flex-end;
 `;
 
 const VegOption = styled.div`
@@ -86,6 +72,7 @@ const ItemImage = styled.div`
   width: 10.2rem;
   & img {
     border-radius: var(--border-radius-sm);
+    pointer-events: none;
   }
 `;
 
@@ -173,12 +160,12 @@ function CategoryItems({ categoryTitle }) {
               <StyledFooter>
                 <StyledPrice>{numberFormat(item.price)}</StyledPrice>{' '}
               </StyledFooter>
-              <MoreButton onClick={() => handleNav(item)}>
+              {/* <MoreButton onClick={() => handleNav(item)}>
                 <More />
-              </MoreButton>
+              </MoreButton> */}
             </ItemInfo>
             <ItemImage>
-              <img src={item.image} width='100%' height='100%' />
+              <img src={item.image} width='100%' height='100%'/>
             </ItemImage>
           </StyledItem>
         ))}
