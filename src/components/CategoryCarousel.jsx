@@ -78,11 +78,11 @@ function CategoryCarousel({ category }) {
   useEffect(() => {
     const currentSub = searchParams.get('sub');
     if (!currentSub && subCategories?.length) {
-      searchParams.set('sub', 'Bestsellers');
-      setSearchParams(searchParams);
+      // searchParams.set('sub', 'Bestsellers');
+      // setSearchParams(searchParams);
     }
     const subCat = subCategories?.find((sub) => sub?.title === currentSub);
-    setActive(subCat?.id || 1);
+    setActive(subCat?.id || 0);
   }, [searchParams, active, setActive, subCategories, setSearchParams]);
 
   if (isLoading) {
