@@ -71,16 +71,12 @@ function CategoryCarousel({ category }) {
   const { title } = category;
   let { isLoading, subCategories } = useSubCategories({ categoryTitle: title });
   const [searchParams, setSearchParams] = useSearchParams();
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState(null);
   const navigate = useNavigate();
   const { categoryType } = useParams();
 
   useEffect(() => {
-    const currentSub = searchParams.get('sub');
-    if (!currentSub && subCategories?.length) {
-      // searchParams.set('sub', 'Bestsellers');
-      // setSearchParams(searchParams);
-    }
+    const currentSub = searchParams.get('sub') || "";
     const subCat = subCategories?.find((sub) => sub?.title === currentSub);
     setActive(subCat?.id || 0);
   }, [searchParams, active, setActive, subCategories, setSearchParams]);

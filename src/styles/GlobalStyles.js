@@ -110,6 +110,10 @@ select {
 
 button {
   cursor: pointer;
+  outline: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  -ms-touch-action: manipulation;
 }
 
 *:disabled {
