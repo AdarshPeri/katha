@@ -12,6 +12,7 @@ import { useContext } from 'react';
 import { CategoryContext } from '../context/categoryContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useMoveHome } from '../hooks/useMoveHome';
+import { useSubCategoryByTitle } from '../hooks/useSubCategoryTitle';
 
 const Nav = styled.nav`
   display: flex;
@@ -141,24 +142,12 @@ const veg = {
 };
 
 const AddOn = styled.span`
-font-family:SFProSemibold;
-font-size: 1.6rem;
-`
+  font-family: SFProSemibold;
+  font-size: 1.6rem;
+`;
 const AddOnLine = styled.span`
-font-size: 1.4rem;
-`
-
-/*
-Add Ons 1: 
-chicken: $100
-prawns: $150
-*/
-
-/*
-tofu: $
-chicken: $100
-prawns: $150
-*/
+  font-size: 1.4rem;
+`;
 
 function ItemDetail() {
   const { isLoading, categories } = useContext(CategoryContext);
@@ -167,6 +156,19 @@ function ItemDetail() {
   const moveHome = useMoveHome();
 
   const { item } = state || {};
+  let { pairsWith } = item;
+
+  const { isLoading: subLoading, subCategory: sub1 } = useSubCategoryByTitle({
+    subTitle: pairsWith?.[0]?.title,
+  });
+  const { isLoading: subLoading1, subCategory: sub2 } = useSubCategoryByTitle({
+    subTitle: pairsWith?.[1]?.title,
+  });
+
+  pairsWith = pairsWith.filter(
+    (sub) =>
+      (sub1 && sub1.title === sub.title) || (sub2 && sub2.title === sub.title)
+  );
 
   const numberFormat = (value) =>
     new Intl.NumberFormat('en-IN', {
@@ -177,13 +179,12 @@ function ItemDetail() {
       .replace('.00', '');
 
   const moveBack = useMoveBack();
-  const { pairsWith } = item;
 
   const handlePair = (sub) => {
     navigate(`/category/${sub.category}?sub=${sub.title?.replace('&', '%26')}`);
   };
 
-  if (isLoading) {
+  if (isLoading || subLoading || subLoading1) {
     return <Spinner />;
   }
 

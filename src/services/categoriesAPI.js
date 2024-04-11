@@ -28,10 +28,23 @@ export const getAllSubCategories = async () => {
   const { data: subCategories, error } = await supabase
     .from('sub-categories')
     .select('*')
-    .eq('isEnabled', true)
+    .eq('isEnabled', true);
 
   if (error) {
     throw new Error('Failed to load sub-categories!');
   }
   return subCategories;
+};
+
+export const getSubCategory = async (subTitle) => {
+  let { data: subCategories, error } = await supabase
+    .from('sub-categories')
+    .select('*')
+    .eq('isEnabled', true)
+    .eq('title', subTitle);
+
+  if (error) {
+    throw new Error('Failed to load sub-categories!');
+  }
+  return subCategories?.length ? subCategories[0] : null;
 };
