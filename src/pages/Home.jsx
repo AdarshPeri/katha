@@ -29,6 +29,7 @@ const H1 = styled.h1`
   grid-column: 1/-1;
   line-height: 1.2;
   font-family: SFProSemiBold;
+  margin-bottom: 3.2rem;
 `;
 
 function Home() {

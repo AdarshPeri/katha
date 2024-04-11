@@ -2,6 +2,7 @@
 import styled from 'styled-components';
 import Veg from '../assets/veg-non.svg?react';
 import Vegan from '../assets/vegan.svg?react';
+import More from '../assets/more.svg?react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useItems } from '../hooks/useItems';
 import { useEffect, useState } from 'react';
@@ -10,7 +11,7 @@ import Spinner from './Spinner';
 const StyledItem = styled.div`
   border-top: 0.7px solid #b7b7b7;
   border-bottom: 0.7px solid #b7b7b7;
-  height: 14rem;
+  height: 14.5rem;
   display: grid;
   grid-template-columns: 2.5fr 1fr;
   gap: 1rem;
@@ -78,7 +79,7 @@ const ItemImage = styled.div`
 
 const Items = styled.div`
   display: block;
-  margin-bottom: 2rem;
+  margin-bottom: 0.2rem;
 `;
 
 const StyledPrice = styled.h2`
@@ -98,7 +99,12 @@ const Heading = styled.h2`
   font-family: SFProSemiBold;
 `;
 
-function CategoryItems({ categoryTitle }) {
+const ScrollToTop = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+function CategoryItems({ categoryTitle, refer }) {
   const { items, isLoading } = useItems({ categoryTitle });
   const [searchParams] = useSearchParams();
   const title = searchParams.get('sub');
@@ -136,41 +142,50 @@ function CategoryItems({ categoryTitle }) {
     return <Spinner />;
   }
 
-  itemsToDisplay?.sort((a,b) => a.order - b.order);
-  
-  return (
-    <Items>
-      <Category>
-        <Heading>{title}</Heading>
-        {itemsToDisplay?.map((item) => (
-          <StyledItem key={item.id} onClick={() => handleNav(item)}>
-            <ItemInfo>
-              <Title>{item.title}</Title>
-              {item.veg !== 'vegan' ? (
-                <VegOption vegOption={item.veg}>
-                  <Veg />
-                </VegOption>
-              ) : (
-                <Vegan width="1.9rem" height="1.9rem"/>
-              )}
+  itemsToDisplay?.sort((a, b) => a.order - b.order);
+  const handleClick = () => {
+    refer.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
-              <StyledDescription>
-                {item.description?.slice(0, 110) + '...'}
-              </StyledDescription>
-              <StyledFooter>
-                <StyledPrice>{numberFormat(item.price)}</StyledPrice>{' '}
-              </StyledFooter>
-              {/* <MoreButton onClick={() => handleNav(item)}>
-                <More />
-              </MoreButton> */}
-            </ItemInfo>
-            <ItemImage>
-              <img src={item.image} width='100%' height='100%'/>
-            </ItemImage>
-          </StyledItem>
-        ))}
-      </Category>
-    </Items>
+  return (
+    <>
+      <Items>
+        <Category>
+          <Heading>{title}</Heading>
+          {itemsToDisplay?.map((item) => (
+            <StyledItem key={item.id} onClick={() => handleNav(item)}>
+              <ItemInfo>
+                <Title>{item.title}</Title>
+                {item.veg !== 'vegan' ? (
+                  <VegOption vegOption={item.veg}>
+                    <Veg />
+                  </VegOption>
+                ) : (
+                  <Vegan width='1.9rem' height='1.9rem' />
+                )}
+
+                <StyledDescription>
+                  {item.description?.length > 110
+                    ? item.description?.slice(0, 110) + '...'
+                    : item.description}
+                </StyledDescription>
+                <StyledFooter>
+                  <StyledPrice>{numberFormat(item.price)}</StyledPrice>{' '}
+                </StyledFooter>
+              </ItemInfo>
+              <ItemImage>
+                <img src={item.image} width='100%' height='100%' />
+              </ItemImage>
+            </StyledItem>
+          ))}
+        </Category>
+      </Items>
+      {title && itemsToDisplay?.length > 3 && (
+        <ScrollToTop>
+          <More onClick={handleClick} />
+        </ScrollToTop>
+      )}
+    </>
   );
 }
 

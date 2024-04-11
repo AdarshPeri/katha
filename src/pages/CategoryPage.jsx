@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import CategoryCarousel from '../components/CategoryCarousel';
 import CategoryItems from '../components/CategoryItems';
 import MenuModal from '../components/MenuModal';
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
 import { CategoryContext } from '../context/categoryContext';
 import { useMoveHome } from '../hooks/useMoveHome';
 
@@ -30,6 +30,7 @@ const StyledCategory = styled.div`
   gap: 1.5rem;
   justify-content: center;
   align-items: center;
+  scroll-behavior: smooth;
 `;
 
 const Header = styled.h1`
@@ -41,6 +42,7 @@ const Header = styled.h1`
 function CategoryPage() {
   const { isLoading, categories } = useContext(CategoryContext);
   const moveHome = useMoveHome();
+  const ref = useRef(null);
 
   const { categoryType } = useParams();
 
@@ -58,15 +60,15 @@ function CategoryPage() {
 
   return (
     <StyledCategory>
-      <Nav>
+      <Nav ref={ref}>
         <BackNav>
-          <Katha onClick={moveHome}/>
+          <Katha onClick={moveHome} />
         </BackNav>
-        <MenuModal categories={categories}/>
+        <MenuModal categories={categories} />
       </Nav>
       <Header>{`${line1} ${line2}`}</Header>
       <CategoryCarousel category={category}></CategoryCarousel>
-      <CategoryItems categoryTitle={category.title} />
+      <CategoryItems categoryTitle={category.title} refer={ref}/>
     </StyledCategory>
   );
 }

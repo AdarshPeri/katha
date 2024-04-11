@@ -53,13 +53,6 @@ const Container = styled.div`
 
 const extraSubs = [
   {
-    id: 2,
-    hex: '#ffe6ca',
-    emoji: '☀️',
-    title: 'Project Garmi',
-    to: '/category/specials',
-  },
-  {
     id: 3,
     hex: '#ffe6ca',
     emoji: '🥐',
