@@ -73,6 +73,13 @@ const Desc = styled.p`
 const StyledDate = styled(Title)`
   padding-bottom: 0.5rem;
 `;
+
+const NoEvent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10rem;
+`;
 function Events() {
   const { isLoading, categories } = useContext(CategoryContext);
   const { isLoading: isEventsLoading, events } = useEvents();
@@ -104,16 +111,20 @@ function Events() {
 
       <Header>Events @Katha</Header>
 
-      {events?.map((event) => (
-        <EventCard key={event.id} onClick={() => handleNav(event)}>
-          <img src={event.previewImage} />
-          <Title>{event.title}</Title>
-          <Summary>
-            <Desc>{event.description}</Desc>
-            <StyledDate>{event.previewDate}</StyledDate>
-          </Summary>
-        </EventCard>
-      ))}
+      {events?.length ? (
+        events?.map((event) => (
+          <EventCard key={event.id} onClick={() => handleNav(event)}>
+            <img src={event.previewImage} />
+            <Title>{event.title}</Title>
+            <Summary>
+              <Desc>{event.description}</Desc>
+              <StyledDate>{event.previewDate}</StyledDate>
+            </Summary>
+          </EventCard>
+        ))
+      ) : (
+        <NoEvent>No upcoming events 🙄</NoEvent>
+      )}
     </StyledEvent>
   );
 }

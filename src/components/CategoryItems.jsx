@@ -15,6 +15,10 @@ const StyledItem = styled.div`
   display: grid;
   grid-template-columns: 2.5fr 1fr;
   gap: 1rem;
+
+  @media (max-width: 38em) {
+    height: 15rem;
+  }
 `;
 
 const StyledDescription = styled.p`
@@ -45,6 +49,10 @@ const Title = styled.h3`
   font-size: 2rem;
   font-family: SFProSemiBold;
   line-height: 1.2;
+
+  @media (max-width: 38em) {
+    font-size: 1.7rem;
+  }
 `;
 
 const VegOption = styled.div`
