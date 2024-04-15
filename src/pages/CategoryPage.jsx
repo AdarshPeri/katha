@@ -17,9 +17,7 @@ const Nav = styled.nav`
 `;
 
 const BackNav = styled.div`
-  display: flex;
-  gap: 1.2rem;
-  align-items: center;
+  width: 11rem;
 `;
 
 const StyledCategory = styled.div`
