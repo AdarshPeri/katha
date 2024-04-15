@@ -1,4 +1,5 @@
 import Katha from '../assets/katha.svg?react';
+import Back from '../assets/back.svg?react';
 import styled from 'styled-components';
 import Spinner from '../components/Spinner';
 import { useParams } from 'react-router-dom';
@@ -17,7 +18,10 @@ const Nav = styled.nav`
 `;
 
 const BackNav = styled.div`
-  width: 11rem;
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  margin-left: -1rem;
 `;
 
 const StyledCategory = styled.div`
@@ -59,14 +63,15 @@ function CategoryPage() {
   return (
     <StyledCategory>
       <Nav ref={ref}>
-        <BackNav onClick={moveHome} >
+        <BackNav onClick={moveHome}>
+          <Back />
           <Katha />
         </BackNav>
         <MenuModal categories={categories} />
       </Nav>
       <Header>{`${line1} ${line2}`}</Header>
       <CategoryCarousel category={category}></CategoryCarousel>
-      <CategoryItems categoryTitle={category.title} refer={ref}/>
+      <CategoryItems categoryTitle={category.title} refer={ref} />
     </StyledCategory>
   );
 }
