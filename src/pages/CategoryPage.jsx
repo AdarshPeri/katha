@@ -59,8 +59,8 @@ function CategoryPage() {
   return (
     <StyledCategory>
       <Nav ref={ref}>
-        <BackNav>
-          <Katha onClick={moveHome} />
+        <BackNav onClick={moveHome} >
+          <Katha />
         </BackNav>
         <MenuModal categories={categories} />
       </Nav>
