@@ -122,22 +122,24 @@ function CategoryItems({ categoryTitle, refer, search }) {
 
   useEffect(() => {
     let filteredItems = [];
-    if (title === 'Bestsellers') {
-      filteredItems = items?.filter((item) => item?.isBestSeller);
-    } else {
-      filteredItems = items?.filter((item) => item?.subCategory === title);
-    }
-    filteredItems = items?.filter((item) => {
-      if (search.length < 3) return true;
-      return (
-        item.title.toLowerCase().includes(search) ||
-        item.description.toLowerCase().includes(search)
-      );
-    });
 
     if (!title && search.length < 3) {
       filteredItems = [];
+    } else if (search.length > 2) {
+      filteredItems = items?.filter((item) => {
+        return (
+          item.title.toLowerCase().includes(search) ||
+          item.description.toLowerCase().includes(search)
+        );
+      });
+    } else {
+      if (title === 'Bestsellers') {
+        filteredItems = items?.filter((item) => item?.isBestSeller);
+      } else {
+        filteredItems = items?.filter((item) => item?.subCategory === title);
+      }
     }
+
     setItemsToDisplay(filteredItems);
   }, [title, items, search]);
 
