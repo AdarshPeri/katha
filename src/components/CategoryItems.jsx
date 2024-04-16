@@ -77,7 +77,7 @@ const veg = {
 
 const ItemImage = styled.div`
   margin-top: 1rem;
-  height: 10rem;
+  height: 11.7rem;
   width: 10.2rem;
   & img {
     border-radius: var(--border-radius-sm);
