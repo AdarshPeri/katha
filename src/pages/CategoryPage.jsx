@@ -41,6 +41,17 @@ const Header = styled.h1`
   font-family: SFProBold;
 `;
 
+const SearchInput = styled.input`
+  background: url('/src/assets/search.svg') no-repeat left;
+  background-size: 2rem;
+  background-color: #eaeaea;
+  border-radius: 0.3rem;
+  padding: 1rem 3rem;
+  border: unset;
+  border-left: inset 1rem transparent;
+  overflow: hidden;
+`;
+
 function CategoryPage() {
   const { isLoading, categories } = useContext(CategoryContext);
   const moveHome = useMoveHome();
@@ -60,6 +71,12 @@ function CategoryPage() {
     categoryName: { line1, line2 },
   } = category;
 
+  const handleSearch = (event) => {
+    const { value } = event.target;
+    if (value.length < 4) return;
+    console.log(value)
+  };
+
   return (
     <StyledCategory>
       <Nav ref={ref}>
@@ -69,6 +86,11 @@ function CategoryPage() {
         </BackNav>
         <MenuModal categories={categories} />
       </Nav>
+      <SearchInput
+        type='text'
+        placeholder='Search'
+        onChange={(e) => handleSearch(e)}
+      ></SearchInput>
       <Header>{`${line1} ${line2}`}</Header>
       <CategoryCarousel category={category}></CategoryCarousel>
       <CategoryItems categoryTitle={category.title} refer={ref} />
