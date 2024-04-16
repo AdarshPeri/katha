@@ -112,7 +112,7 @@ const ScrollToTop = styled.div`
   justify-content: flex-end;
 `;
 
-function CategoryItems({ categoryTitle, refer }) {
+function CategoryItems({ categoryTitle, refer, search }) {
   const { items, isLoading } = useItems({ categoryTitle });
   const [searchParams] = useSearchParams();
   const title = searchParams.get('sub');
@@ -127,8 +127,12 @@ function CategoryItems({ categoryTitle, refer }) {
     } else {
       filteredItems = items?.filter((item) => item?.subCategory === title);
     }
+    filteredItems = items?.filter((item) => {
+      if (search.length < 3) return true;
+      return item.title.toLowerCase().includes(search) || item.description.toLowerCase().includes(search);
+    });
     setItemsToDisplay(filteredItems);
-  }, [title, items]);
+  }, [title, items, search]);
 
   const numberFormat = (value) =>
     new Intl.NumberFormat('en-IN', {
@@ -159,7 +163,7 @@ function CategoryItems({ categoryTitle, refer }) {
     <>
       <Items>
         <Category>
-          <Heading>{title}</Heading>
+          {search.length < 3 && <Heading>{title}</Heading>}
           {itemsToDisplay?.map((item) => (
             <StyledItem key={item.id} onClick={() => handleNav(item)}>
               <ItemInfo>

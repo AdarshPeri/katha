@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import CategoryCarousel from '../components/CategoryCarousel';
 import CategoryItems from '../components/CategoryItems';
 import MenuModal from '../components/MenuModal';
-import { useContext, useRef } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { CategoryContext } from '../context/categoryContext';
 import { useMoveHome } from '../hooks/useMoveHome';
 
@@ -42,7 +42,7 @@ const Header = styled.h1`
 `;
 
 const SearchInput = styled.input`
-  background: url('/src/assets/search.svg') no-repeat left;
+  background: url('/static/images/search.svg') no-repeat left;
   background-size: 2rem;
   background-color: #eaeaea;
   border-radius: 0.3rem;
@@ -56,6 +56,7 @@ function CategoryPage() {
   const { isLoading, categories } = useContext(CategoryContext);
   const moveHome = useMoveHome();
   const ref = useRef(null);
+  const [searchValue, setSearchValue] = useState('');
 
   const { categoryType } = useParams();
 
@@ -73,8 +74,7 @@ function CategoryPage() {
 
   const handleSearch = (event) => {
     const { value } = event.target;
-    if (value.length < 4) return;
-    console.log(value)
+    setSearchValue(value);
   };
 
   return (
@@ -88,12 +88,13 @@ function CategoryPage() {
       </Nav>
       <SearchInput
         type='text'
-        placeholder='Search'
+        placeholder='Search with 4 characters min.'
+        value = {searchValue}
         onChange={(e) => handleSearch(e)}
       ></SearchInput>
       <Header>{`${line1} ${line2}`}</Header>
-      <CategoryCarousel category={category}></CategoryCarousel>
-      <CategoryItems categoryTitle={category.title} refer={ref} />
+      <CategoryCarousel category={category} search = {searchValue.trim().toLowerCase()}></CategoryCarousel>
+      <CategoryItems categoryTitle={category.title} refer={ref} search = {searchValue.trim().toLowerCase()}/>
     </StyledCategory>
   );
 }

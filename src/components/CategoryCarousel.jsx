@@ -61,7 +61,7 @@ const extraSubs = [
   },
 ];
 
-function CategoryCarousel({ category }) {
+function CategoryCarousel({ category, search }) {
   const { title } = category;
   let { isLoading, subCategories } = useSubCategories({ categoryTitle: title });
   const [searchParams, setSearchParams] = useSearchParams();
@@ -106,6 +106,8 @@ function CategoryCarousel({ category }) {
     searchParams.set('sub', subCategory.title);
     setSearchParams(searchParams);
   };
+
+  if(search?.length > 2) { return null; }
 
   return (
     <Container>
