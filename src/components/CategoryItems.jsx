@@ -129,8 +129,15 @@ function CategoryItems({ categoryTitle, refer, search }) {
     }
     filteredItems = items?.filter((item) => {
       if (search.length < 3) return true;
-      return item.title.toLowerCase().includes(search) || item.description.toLowerCase().includes(search);
+      return (
+        item.title.toLowerCase().includes(search) ||
+        item.description.toLowerCase().includes(search)
+      );
     });
+
+    if (!title && search.length < 3) {
+      filteredItems = [];
+    }
     setItemsToDisplay(filteredItems);
   }, [title, items, search]);
 

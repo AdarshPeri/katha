@@ -126,6 +126,10 @@ input:disabled {
   color: var(--color-grey-500);
 }
 
+input::placeholder {
+  font-size: 1.4rem;
+}
+
 
 /* Parent selector, finally 😃 */
 button:has(svg) {
