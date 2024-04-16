@@ -88,7 +88,7 @@ function CategoryPage() {
       </Nav>
       <SearchInput
         type='text'
-        placeholder='Search with 4 characters min.'
+        placeholder='Search with 3 characters min.'
         value = {searchValue}
         onChange={(e) => handleSearch(e)}
       ></SearchInput>
