@@ -19,6 +19,9 @@ const StyledItem = styled.div`
   @media (max-width: 38em) {
     height: 15rem;
   }
+  opacity: ${(props) => (props.soldOut ? 0.6 : 1)};
+  filter: ${(props) => (props.soldOut ? 'grayscale(100%)' : 'none')};
+  pointer-events: ${(props) => (props.soldOut ? 'none' : 'all')};
 `;
 
 const StyledDescription = styled.p`
@@ -80,6 +83,7 @@ const ItemImage = styled.div`
   height: 11.7rem;
   width: 10.2rem;
   & img {
+    filter: ${(props) => (props.soldOut ? 'grayscale(100%)' : 'none')};
     border-radius: var(--border-radius-sm);
     pointer-events: none;
   }
@@ -174,7 +178,11 @@ function CategoryItems({ categoryTitle, refer, search }) {
         <Category>
           {search.length < 3 && <Heading>{title}</Heading>}
           {itemsToDisplay?.map((item) => (
-            <StyledItem key={item.id} onClick={() => handleNav(item)}>
+            <StyledItem
+              key={item.id}
+              onClick={() => handleNav(item)}
+              soldOut={item.soldOut}
+            >
               <ItemInfo>
                 <Title>{item.title}</Title>
                 {item.veg !== 'vegan' ? (
@@ -194,7 +202,7 @@ function CategoryItems({ categoryTitle, refer, search }) {
                   <StyledPrice>{numberFormat(item.price)}</StyledPrice>{' '}
                 </StyledFooter>
               </ItemInfo>
-              <ItemImage>
+              <ItemImage soldOut={item.soldOut}>
                 <img src={item.image} width='100%' height='100%' />
               </ItemImage>
             </StyledItem>
