@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
-import styled from 'styled-components';
-import Veg from '../assets/veg-non.svg?react';
-import Vegan from '../assets/vegan.svg?react';
-import More from '../assets/more.svg?react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useItems } from '../hooks/useItems';
-import { useEffect, useState } from 'react';
-import Spinner from './Spinner';
+import styled from "styled-components";
+import Veg from "../assets/veg-non.svg?react";
+import Vegan from "../assets/vegan.svg?react";
+import More from "../assets/more.svg?react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useItems } from "../hooks/useItems";
+import { useEffect, useState } from "react";
+import Spinner from "./Spinner";
 
 const StyledItem = styled.div`
   border-top: 0.7px solid #b7b7b7;
@@ -20,8 +20,8 @@ const StyledItem = styled.div`
     height: 15rem;
   }
   opacity: ${(props) => (props.soldOut ? 0.6 : 1)};
-  filter: ${(props) => (props.soldOut ? 'grayscale(100%)' : 'none')};
-  pointer-events: ${(props) => (props.soldOut ? 'none' : 'all')};
+  filter: ${(props) => (props.soldOut ? "grayscale(100%)" : "none")};
+  pointer-events: ${(props) => (props.soldOut ? "none" : "all")};
 `;
 
 const StyledDescription = styled.p`
@@ -73,9 +73,9 @@ const VegOption = styled.div`
 `;
 
 const veg = {
-  veg: '#3D8D45',
-  'non-veg': '#D50A0A',
-  egg: '#FFC700',
+  veg: "#3D8D45",
+  "non-veg": "#D50A0A",
+  egg: "#FFC700",
 };
 
 const ItemImage = styled.div`
@@ -83,7 +83,7 @@ const ItemImage = styled.div`
   height: 11.7rem;
   width: 10.2rem;
   & img {
-    filter: ${(props) => (props.soldOut ? 'grayscale(100%)' : 'none')};
+    filter: ${(props) => (props.soldOut ? "grayscale(100%)" : "none")};
     border-radius: var(--border-radius-sm);
     pointer-events: none;
   }
@@ -119,7 +119,7 @@ const ScrollToTop = styled.div`
 function CategoryItems({ categoryTitle, refer, search }) {
   const { items, isLoading } = useItems({ categoryTitle });
   const [searchParams] = useSearchParams();
-  const title = searchParams.get('sub');
+  const title = searchParams.get("sub");
 
   const [itemsToDisplay, setItemsToDisplay] = useState([]);
   const navigate = useNavigate();
@@ -137,23 +137,33 @@ function CategoryItems({ categoryTitle, refer, search }) {
         );
       });
     } else {
-      if (title === 'Bestsellers') {
+      if (title === "Bestsellers") {
         filteredItems = items?.filter((item) => item?.isBestSeller);
       } else {
         filteredItems = items?.filter((item) => item?.subCategory === title);
       }
     }
 
+    const uniqueStrings = [];
+    filteredItems = filteredItems.filter((o) => {
+      const s = o?.title?.trim();
+      if (!uniqueStrings.includes(s)) {
+        uniqueStrings.push(s);
+        return true;
+      }
+      return false;
+    });
+
     setItemsToDisplay(filteredItems);
   }, [title, items, search]);
 
   const numberFormat = (value) =>
-    new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
+    new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
     })
       .format(value)
-      .replace('.00', '');
+      .replace(".00", "");
 
   const handleNav = (item) => {
     navigate(`:${item.title}`, {
@@ -169,7 +179,7 @@ function CategoryItems({ categoryTitle, refer, search }) {
 
   itemsToDisplay?.sort((a, b) => a.order - b.order);
   const handleClick = () => {
-    refer.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    refer.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
@@ -185,25 +195,25 @@ function CategoryItems({ categoryTitle, refer, search }) {
             >
               <ItemInfo>
                 <Title>{item.title}</Title>
-                {item.veg !== 'vegan' ? (
+                {item.veg !== "vegan" ? (
                   <VegOption vegOption={item.veg}>
                     <Veg />
                   </VegOption>
                 ) : (
-                  <Vegan width='1.9rem' height='1.9rem' />
+                  <Vegan width="1.9rem" height="1.9rem" />
                 )}
 
                 <StyledDescription>
                   {item.description?.length > 110
-                    ? item.description?.slice(0, 110) + '...'
+                    ? item.description?.slice(0, 110) + "..."
                     : item.description}
                 </StyledDescription>
                 <StyledFooter>
-                  <StyledPrice>{numberFormat(item.price)}</StyledPrice>{' '}
+                  <StyledPrice>{numberFormat(item.price)}</StyledPrice>{" "}
                 </StyledFooter>
               </ItemInfo>
               <ItemImage soldOut={item.soldOut}>
-                <img src={item.image} width='100%' height='100%' />
+                <img src={item.image} width="100%" height="100%" />
               </ItemImage>
             </StyledItem>
           ))}
