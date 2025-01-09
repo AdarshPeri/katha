@@ -1,14 +1,14 @@
-import Katha from '../assets/katha.svg?react';
-import Back from '../assets/back.svg?react';
-import styled from 'styled-components';
-import Spinner from '../components/Spinner';
-import { useParams } from 'react-router-dom';
-import CategoryCarousel from '../components/CategoryCarousel';
-import CategoryItems from '../components/CategoryItems';
-import MenuModal from '../components/MenuModal';
-import { useContext, useRef, useState } from 'react';
-import { CategoryContext } from '../context/categoryContext';
-import { useMoveHome } from '../hooks/useMoveHome';
+import Katha from "../assets/katha.svg?react";
+import Back from "../assets/back.svg?react";
+import styled from "styled-components";
+import Spinner from "../components/Spinner";
+import { useParams } from "react-router-dom";
+import CategoryCarousel from "../components/CategoryCarousel";
+import CategoryItems from "../components/CategoryItems";
+import MenuModal from "../components/MenuModal";
+import { useContext, useRef, useState } from "react";
+import { CategoryContext } from "../context/categoryContext";
+import { useMoveHome } from "../hooks/useMoveHome";
 
 const Nav = styled.nav`
   display: flex;
@@ -42,7 +42,7 @@ const Header = styled.h1`
 `;
 
 const SearchInput = styled.input`
-  background: url('/static/images/search.svg') no-repeat left;
+  background: url("/static/images/search.svg") no-repeat left;
   background-size: 2rem;
   background-color: #eaeaea;
   border-radius: 0.3rem;
@@ -56,7 +56,7 @@ function CategoryPage() {
   const { isLoading, categories } = useContext(CategoryContext);
   const moveHome = useMoveHome();
   const ref = useRef(null);
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
 
   const { categoryType } = useParams();
 
@@ -87,14 +87,21 @@ function CategoryPage() {
         <MenuModal categories={categories} />
       </Nav>
       <SearchInput
-        type='text'
-        placeholder='Search with 3 or more characters.'
-        value = {searchValue}
+        type="text"
+        placeholder="Look up an item"
+        value={searchValue}
         onChange={(e) => handleSearch(e)}
       ></SearchInput>
       <Header>{`${line1} ${line2}`}</Header>
-      <CategoryCarousel category={category} search = {searchValue.trim().toLowerCase()}></CategoryCarousel>
-      <CategoryItems categoryTitle={category.title} refer={ref} search = {searchValue.trim().toLowerCase()}/>
+      <CategoryCarousel
+        category={category}
+        search={searchValue.trim().toLowerCase()}
+      ></CategoryCarousel>
+      <CategoryItems
+        categoryTitle={category.title}
+        refer={ref}
+        search={searchValue.trim().toLowerCase()}
+      />
     </StyledCategory>
   );
 }
