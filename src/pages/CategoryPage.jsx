@@ -88,7 +88,7 @@ function CategoryPage() {
       </Nav>
       <SearchInput
         type="text"
-        placeholder="Look up an item"
+        placeholder="Look up an item."
         value={searchValue}
         onChange={(e) => handleSearch(e)}
       ></SearchInput>
