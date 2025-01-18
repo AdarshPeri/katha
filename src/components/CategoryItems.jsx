@@ -4,7 +4,7 @@ import Veg from "../assets/veg-non.svg?react";
 import Vegan from "../assets/vegan.svg?react";
 import More from "../assets/more.svg?react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useItems } from "../hooks/useItems";
+import { useGetAllItems, useItems } from "../hooks/useItems";
 import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
 
@@ -118,6 +118,7 @@ const ScrollToTop = styled.div`
 
 function CategoryItems({ categoryTitle, refer, search }) {
   const { items, isLoading } = useItems({ categoryTitle });
+  const { items: allItems, isLoading: isSearchItemsLoading } = useGetAllItems();
   const [searchParams] = useSearchParams();
   const title = searchParams.get("sub");
 
@@ -130,7 +131,7 @@ function CategoryItems({ categoryTitle, refer, search }) {
     if (!title && search.length < 3) {
       filteredItems = [];
     } else if (search.length > 2) {
-      filteredItems = items?.filter((item) => {
+      filteredItems = allItems?.filter((item) => {
         return (
           item.title.toLowerCase().includes(search) ||
           item.description.toLowerCase().includes(search)
@@ -145,7 +146,7 @@ function CategoryItems({ categoryTitle, refer, search }) {
     }
 
     const uniqueStrings = [];
-    filteredItems = filteredItems.filter((o) => {
+    filteredItems = filteredItems?.filter((o) => {
       const s = o?.title?.trim();
       if (!uniqueStrings.includes(s)) {
         uniqueStrings.push(s);
@@ -155,7 +156,7 @@ function CategoryItems({ categoryTitle, refer, search }) {
     });
 
     setItemsToDisplay(filteredItems);
-  }, [title, items, search]);
+  }, [title, items, search, allItems]);
 
   const numberFormat = (value) =>
     new Intl.NumberFormat("en-IN", {
@@ -173,7 +174,7 @@ function CategoryItems({ categoryTitle, refer, search }) {
     });
   };
 
-  if (isLoading) {
+  if (isLoading || isSearchItemsLoading) {
     return <Spinner />;
   }
 

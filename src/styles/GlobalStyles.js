@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
 :root {
@@ -106,6 +106,10 @@ textarea,
 select {
   font: inherit;
   color: inherit;
+}
+
+input:focus {
+  outline-color: #305F35;
 }
 
 button {

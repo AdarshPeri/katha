@@ -92,7 +92,11 @@ function CategoryPage() {
         value={searchValue}
         onChange={(e) => handleSearch(e)}
       ></SearchInput>
-      <Header>{`${line1} ${line2}`}</Header>
+      {searchValue?.length < 3 ? (
+        <Header>{`${line1} ${line2}`}</Header>
+      ) : (
+        <Header>{`Search Results`}</Header>
+      )}
       <CategoryCarousel
         category={category}
         search={searchValue.trim().toLowerCase()}
